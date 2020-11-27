@@ -13,7 +13,7 @@ fi
 
 [[ -z "$LIST_FILES" ]] && LIST_FILES=`find ${DIR_TO_PARSE} ${FIND_FILE_PATTERN} -type f`
 
-for CURRENT_FILE in ${LIST_FILES}
+while IFS= read CURRENT_FILE
 do
 
   [[ "${CURRENT_FILE}" != ${DIR_TO_PARSE}/* ]] && CURRENT_FILE=${DIR_TO_PARSE}/${CURRENT_FILE}
@@ -75,8 +75,8 @@ do
 		echo "ERROR - ${FILE_RELATIVE_PATH} problem when trying to compress it"
 	fi
 
-  [[ -e "${FILE_LOSSLESS}" ]] && rm ${FILE_LOSSLESS}
+  [[ -e "${FILE_LOSSLESS}" ]] && rm "${FILE_LOSSLESS}"
 
-done
+done <<< ${LIST_FILES}
 
 exit 0
